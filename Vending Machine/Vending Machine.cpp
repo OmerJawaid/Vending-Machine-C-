@@ -92,65 +92,82 @@ int main()
 				}
 				else
 					cout << "There are no items to be purchased. Add some!" << endl;
-				cout << "Do you want to add more items? (Y/N)";
-				cin >> add_more_item_choice;
-			} while (add_more_item_choice != 'N' && add_more_item_choice != 'n');
+				cout << "Do you want to add items? (Y/N)";
+				cin >> item_count_choice;
+			} while (item_count==0); //item_count_choice != 'N' && item_count_choice != 'n'
 		}
 
 		//Menu
 		cout << "1. Restocking" << endl
 			<< "2. Purchase" << endl
+			<< "3.Quit Menu" << endl
 			<< "What do you want to do?";
 		cin >> main_choice;
+		//Avalible Items
+		
 		//Restocking
-		if (main_choice == 1)
-		{
-			int item_search,adding_quantity;
-			cout << "Which Item you want to restock?\nEnter the index"<<endl;
-				cin >> item_search;
-				for (int i = 1; i <= 6; i++)
-				{
-					if (item_search == i)
-					{
-						cout << item_name[i] <<" " << item_quantity[i] << endl;
-						cout << "Enter the quantity to add: ";
-						cin >> adding_quantity;
-						item_quantity[i] += adding_quantity;
-						cout << "New Quantity: " << item_quantity[i]<<endl
-							<<"Item Restocked"<<endl;
-						break;
-					}
-				}
-		}
-		//Purchasing
-		else if (main_choice == 2)
-		{
-			int item_search, price_notax, tax_price,price_tax;
-			cout << "Enter the index of item you want to purchase: ";
-			cin >> item_search;
-			for (int i = 1; i <= 6; i++)
+		do {
+			if (main_choice == 1)
 			{
-				if (item_search == i)
-				{
-					cout << item_name[i] << " "<<item_quantity[i]<<endl;
-					if (item_quantity == 0)
+				char restock_choice;
+				do {
+					int item_search, adding_quantity;
+					cout << "Which Item you want to restock?\nEnter the index" << endl;
+					cin >> item_search;
+					for (int i = 1; i <= 6; i++)
 					{
-						cout << "The product is not in stock"<<endl;
-						break;
+						if (item_search == i)
+						{
+							cout << item_name[i] << " " << item_quantity[i] << endl;
+							cout << "Enter the quantity to add: ";
+							cin >> adding_quantity;
+							item_quantity[i] += adding_quantity;
+							cout << "New Quantity: " << item_quantity[i] << endl
+								<< "Item Restocked" << endl;
+							break;
+						}
 					}
-					price_notax = item_quantity[i] * item_prices[i];
-					tax_price = price_notax * 0.14;
-					price_tax = price_notax - tax_price;
-					item_quantity[i]--;
-					cout << "Price: " << price_tax;
-					cout << "Item Purchased Successfully."<<endl;
-					break;
-				}
+					cout << "Do you want to restock more products?(Y/N)";
+					cin >> restock_choice;
+				} while (restock_choice != 'N' && restock_choice != 'n');
 			}
-		}
-		else
-			cout << "Enter correct choice.";
-
+			//Purchasing
+			if (main_choice == 2)
+			{
+				char purchase;
+				do {
+					int item_search, price_notax, tax_price, price_tax;
+					cout << "Enter the index of item you want to purchase: ";
+					cin >> item_search;
+					for (int i = 1; i <= 6; i++)
+					{
+						if (item_search == i)
+						{
+							int sale_quantity;
+							cout << item_name[i] << " " << item_prices[i] << endl;
+							if (item_quantity == 0)
+							{
+								cout << "The product is not in stock" << endl;
+								break;
+							}
+							cout << "Enter the quantity: ";
+							cin >> sale_quantity;
+							price_notax = sale_quantity * item_prices[i];
+							tax_price = price_notax * 0.14;
+							price_tax = price_notax - tax_price;
+							item_quantity[i]--;
+							cout << "Price: " << price_tax;
+							cout << "Item Purchased Successfully." << endl;
+							break;
+						}
+					}
+					cout << "Do you want to make another purchase? ";
+					cin >> purchase;
+				} while (purchase != 'N' && purchase != 'n');
+			}
+			else
+				cout << "Enter correct choice.";
+		} while (main_choice != 3);
 		cout << "If you want to quit press Q else press any alphabet.";
 		cin >> stop;
 	} while (stop != 'Q' && stop != 'q');
