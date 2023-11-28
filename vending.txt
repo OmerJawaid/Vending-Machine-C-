@@ -1,0 +1,10 @@
+Vending Machine:
+function for list of avalible items
+function for process of purchase by updating the quantity
+multiple items selection
+total cost of selected items
+
+main:
+display menu
+user making selection
+provide feedback for purchase on purchased item and total cost.
